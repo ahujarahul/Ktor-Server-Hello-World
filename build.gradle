@@ -1,0 +1,27 @@
+plugins {
+    id 'application'
+    id 'org.jetbrains.kotlin.jvm' version '1.6.0'
+}
+
+group "com.example"
+version "0.0.1"
+mainClassName = "io.ktor.server.netty.EngineMain"
+
+def isDevelopment = project.ext.has("development")
+applicationDefaultJvmArgs = ["-Dio.ktor.development=$isDevelopment"]
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // adds Ktor's core components to our project.
+    implementation "io.ktor:ktor-server-core-jvm:$ktor_version"
+    // adds the Netty engine to our project, allowing us to use server functionality without having to rely on an external application container
+    implementation "io.ktor:ktor-server-netty-jvm:$ktor_version"
+    // provides an implementation of SLF4J, allowing us to see nicely formatted logs in a console
+    implementation "ch.qos.logback:logback-classic:$logback_version"
+    // allow us to test parts of a Ktor application without having to use the whole HTTP stack
+    testImplementation "io.ktor:ktor-server-tests-jvm:$ktor_version"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+}
